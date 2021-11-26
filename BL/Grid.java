@@ -2,6 +2,12 @@ public class Grid {
     int Columns;
     int Rows;
     Cell[][] Cells;
+    public Grid()
+    {
+        Columns=10000;
+        Rows=10000;
+        Cells=new Cell[Rows][Columns];
+    }
     public void SetDimentions(int R,int C)
     {
         Rows=R;
