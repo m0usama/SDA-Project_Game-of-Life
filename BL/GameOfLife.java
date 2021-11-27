@@ -134,6 +134,18 @@ public class GameOfLife {
         }
         return arr;
     }
+    public int[][] GetGridToUI()  //bl to UI
+    {
+        int[][] arr=new int[Rows][columns];
+        for(int i=0;i<Rows;i++)
+        {
+            for(int j=0;j<columns;j++)
+            {
+                arr[i][j]=GameGrid.Cells[i][j].GetStatus();
+            }
+        }
+        return arr;
+    }
     public int Clear(int status)
     {
         if(status==0)
@@ -145,8 +157,15 @@ public class GameOfLife {
             return 0;
         }
     }
-    public Grid LoadState(int stateId)
+    public void LoadState(int[][] arr,int size)
     {
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<2;j++)
+            {
+                GameGrid.Cells[arr[i][0]][arr[i][1]].SetStatus(1);
+            }
+        }
 
     }
     public int saveState(Grid CurrentState)
