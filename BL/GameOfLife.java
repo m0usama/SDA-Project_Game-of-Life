@@ -33,6 +33,7 @@ public class GameOfLife {
     }
     public int Next(int status)
     {
+
         if(this.status==0)
         {
             for(int i=0;i<Rows;i++)
@@ -115,6 +116,24 @@ public class GameOfLife {
         }
         return 1;
     }
+    public int[][] GetGrid()  //bl to db
+    {
+        int[][] arr=new int[Rows][2];
+        int size=0;
+        for(int i=0;i<Rows;i++)
+        {
+            for(int j=0;j<columns;j++)
+            {
+                if(GameGrid.Cells[i][j].GetStatus()==1)
+                {
+                    arr[size][0]=i;
+                    arr[size][1]=j;
+                    size++;
+                }
+            }
+        }
+        return arr;
+    }
     public int Clear(int status)
     {
         if(status==0)
@@ -126,11 +145,15 @@ public class GameOfLife {
             return 0;
         }
     }
-    //public Grid LoadState(int stateId)
+    public Grid LoadState(int stateId)
     {
 
     }
-    //public int saveState(Grid CurrentState);
+    public int saveState(Grid CurrentState)
+    {
+
+
+    }
     public void SpeedControl(int speed)  //current speed of grid
     {
         this.speed=speed;
@@ -142,7 +165,7 @@ public class GameOfLife {
         {
             GameGrid.Cells[x][y].SetStatus(1);
         }
-        if(GameGrid.Cells[x][y].GetStatus()==1)
+        else if(GameGrid.Cells[x][y].GetStatus()==1)
         {
             GameGrid.Cells[x][y].SetStatus(0);
         }
