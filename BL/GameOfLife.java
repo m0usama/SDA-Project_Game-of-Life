@@ -20,19 +20,80 @@ public class GameOfLife {
     }
     public int Start(int status) throws InterruptedException     //status=value coming from UI that start is clicked
     {
-
-        if (status==0)
+        int flag=1;
+        while(flag==1)
         {
-            TimeUnit.SECONDS.sleep(speed);
-            Next(status);
-            return 1;
+            if (this.status == 0) {
+                TimeUnit.SECONDS.sleep(speed);
+                Next(status);
+
+            }
         }
-        else{
-            return 0;
-        }
+        return 1;
     }
     public int Next(int status)
     {
+        if(this.status==0)
+        {
+            for(int i=0;i<Rows;i++)
+            {
+
+                for(int j=0;j<columns;j++)
+                {
+                    int neighbour=0;
+                    if(i>0 && j> 0 && GameGrid.Cells[i-1][j-1].GetStatus()==1)    //left top  diagonal
+                    {
+                        neighbour++;
+                    }
+                    if(i>0 && GameGrid.Cells[i-1][j].GetStatus()==1)        //top
+                    {
+                        neighbour++;
+                    }
+                    if(i>0 && j< 9999 && GameGrid.Cells[i-1][j+1].GetStatus()==1)   //right top Diagonal
+                    {
+                        neighbour++;
+                    }
+                    if(j> 0 && GameGrid.Cells[i][j-1].GetStatus()==1)     //left
+                    {
+                        neighbour++;
+                    }
+                    if(j< 9999 && GameGrid.Cells[i][j+1].GetStatus()==1)  //right
+                    {
+                        neighbour++;
+                    }
+                    if(i<9999 && j> 0 && GameGrid.Cells[i+1][j-1].GetStatus()==1)  //left bottom diagonal
+                    {
+                        neighbour++;
+                    }
+                    if(i<9999 && GameGrid.Cells[i+1][j].GetStatus()==1)     //down
+                    {
+                        neighbour++;
+                    }
+                    if(i<9999 && j<9999 && GameGrid.Cells[i+1][j+1].GetStatus()==1)  //right bottom diagonal
+                    {
+                        neighbour++;
+                    }
+                    GameGrid.Cells[i][j].SetNeighbour(neighbour);
+                }
+            }
+            for(int i=0;i<Rows;i++)
+            {
+                for(int j=0;j<columns;j++)
+                {
+                    int neighbour=0;
+                    neighbour=GameGrid.Cells[i][j].GetNeighbour();
+                    if(neighbour != 3 && neighbour !=2 && GameGrid.Cells[i][j].GetStatus()==1)
+                    {
+                        GameGrid.Cells[i][j].SetStatus(0);    //removing dead cells
+                    }
+                    else if(neighbour==3 &&GameGrid.Cells[i][j].GetStatus()==0)
+                    {
+                        GameGrid.Cells[i][j].SetStatus(1);    //Activating dead cells
+                    }
+                }
+
+            }
+        }
         return 1;
     }
     public int Stop(int status)
@@ -46,7 +107,14 @@ public class GameOfLife {
             return 0;
         }
     }
-    //public int Reset(int status);
+    public int Reset(int status)
+    {
+        if(status==0)
+        {
+
+        }
+        return 1;
+    }
     public int Clear(int status)
     {
         if(status==0)
@@ -58,7 +126,10 @@ public class GameOfLife {
             return 0;
         }
     }
-    //public Grid LoadState(int stateId);
+    //public Grid LoadState(int stateId)
+    {
+
+    }
     //public int saveState(Grid CurrentState);
     public void SpeedControl(int speed)  //current speed of grid
     {
