@@ -1,7 +1,7 @@
 public class Grid {
     int Columns;
     int Rows;
-    Cell[][] Cells;
+    public Cell[][] Cells;
     public Grid()
     {
         Columns=10000;
