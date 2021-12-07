@@ -1,6 +1,6 @@
 import java.util.concurrent.TimeUnit;
-
-public class GameOfLife {
+import java.util.*;
+public class GameOfLife implements ForUI {
     public int speed;
     public int columns;
     public int Rows;
@@ -18,6 +18,7 @@ public class GameOfLife {
         GameGrid=new Grid();
         status=0;
     }
+    @Override
     public int Start(int status) throws InterruptedException     //status=value coming from UI that start is clicked
     {
         int flag=1;
@@ -31,6 +32,7 @@ public class GameOfLife {
         }
         return 1;
     }
+    @Override
     public int Next(int status)
     {
 
@@ -97,6 +99,7 @@ public class GameOfLife {
         }
         return 1;
     }
+    @Override
     public int Stop(int status)
     {
         if(status==1)
@@ -108,6 +111,7 @@ public class GameOfLife {
             return 0;
         }
     }
+    @Override
     public int Reset(int status)
     {
         if(status==0)
@@ -116,6 +120,7 @@ public class GameOfLife {
         }
         return 1;
     }
+
     public int[][] GetGrid()  //bl to db
     {
         int[][] arr=new int[Rows][2];
@@ -134,6 +139,7 @@ public class GameOfLife {
         }
         return arr;
     }
+
     public int[][] GetGridToUI()  //bl to UI
     {
         int[][] arr=new int[Rows][columns];
@@ -146,6 +152,7 @@ public class GameOfLife {
         }
         return arr;
     }
+    @Override
     public int Clear(int status)
     {
         if(status==0)
@@ -157,6 +164,7 @@ public class GameOfLife {
             return 0;
         }
     }
+
     public void LoadState(int[][] arr,int size)
     {
         for(int i=0;i<size;i++)
@@ -170,14 +178,15 @@ public class GameOfLife {
     }
     public int saveState(Grid CurrentState)
     {
-
-
+        return 1;
     }
+    @Override
     public void SpeedControl(int speed)  //current speed of grid
     {
         this.speed=speed;
     }
     //public int DeleteSaveState();
+    @Override
     public int ManuallyDrawaPatren(int x,int y)
     {
         if(GameGrid.Cells[x][y].GetStatus()==0)
