@@ -71,10 +71,12 @@ public class State {
         this.grid = new Grid(r, a);
     }
 
-    public String[][] loadState(String StateName,int ro)
+    public int[][] loadState(String StateName,int ro)
     {
-        String load;
+        String load=""; //for filing
+        String load1=""; //for db
         String my_matrics[][] = new String [ro][2] ;
+        int [][] arr =new int[ro][2];
         for(int i=0; i<ro ;i++)
         {
             for (int j = 0; j < 2; j++)
@@ -83,7 +85,25 @@ public class State {
             }
         }
         try
+
         {
+            //filing
+            String Filename = "state" + StateName + ".txt";
+            try {
+                File myObj = new File(Filename);
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine())
+                {
+                    load = myReader.nextLine();
+                    System.out.println(load);
+                }
+                myReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+            //connectivity
             String Output=" ";
             Connection con = DriverManager.getConnection(url);
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -93,10 +113,11 @@ public class State {
             Cmt.registerOutParameter(2, Types.INTEGER);
             Cmt.execute();
             Output=Cmt.getString(2);
-            load = Output;
+            load1 = Output;
 
             //load = LoadState(StateName);
 
+            //string to int[][]
             load=load.replace("[","");//replacing all [ to ""
             load=load.substring(0,load.length()-1);//ignoring last two ]]
             String s1[]=load.split("],");//separating all by "],"
@@ -112,9 +133,12 @@ public class State {
                 }
             }
             //printing result
+
             for(int i=0;i<ro;i++){
                 for(int j=0;j<2;j++){
-                    System.out.print(my_matrics[i][j]+" ");
+
+                    arr[i][j]= Integer.parseInt(my_matrics[i][j]);
+
                 }
                 System.out.println("");
             }
@@ -124,7 +148,7 @@ public class State {
         {
             e.printStackTrace();
         }
-        return my_matrics;
+        return arr;
     }
 
     public void saveState(Grid state)
