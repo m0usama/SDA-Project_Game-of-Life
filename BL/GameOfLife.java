@@ -116,9 +116,14 @@ public class GameOfLife implements ForUI {
     {
         if(status==0)
         {
-
+            counter=0;
+            speed=1;
+            NoOfStates=0;
+            GameGrid.Clear();
+            return 0;
         }
-        return 1;
+        else
+            return 1;
     }
 
     public int[][] GetGrid()  //bl to db //pass grid
