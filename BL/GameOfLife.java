@@ -121,7 +121,7 @@ public class GameOfLife implements ForUI {
         return 1;
     }
 
-    public int[][] GetGrid()  //bl to db
+    public int[][] GetGrid()  //bl to db //pass grid
     {
         int[][] arr=new int[Rows][2];
         int size=0;
@@ -139,7 +139,24 @@ public class GameOfLife implements ForUI {
         }
         return arr;
     }
-
+   public int[][] GetGridsavstate(Grid obj)  //grid for save state
+    {
+        int[][] arr=new int[Rows][2];
+        int size=0;
+        for(int i=0;i<10000;i++)
+        {
+            for(int j=0;j<10000;j++)
+            {
+                if(obj.Cells[i][j].GetStatus()==1)
+                {
+                    arr[size][0]=i;
+                    arr[size][1]=j;
+                    size++;
+                }
+            }
+        }
+        return arr;
+    }
     public int[][] GetGridToUI()  //bl to UI
     {
         int[][] arr=new int[Rows][columns];
