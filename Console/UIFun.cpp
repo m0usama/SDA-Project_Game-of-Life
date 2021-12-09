@@ -1,7 +1,11 @@
-package com.company;
+package UI;
+
+import com.company.GameOfLife;
 import java.io.IOException;
 import java.util.Scanner;
-public class Main {
+import java.util.concurrent.TimeUnit;
+import java.util.*;
+public class UIFun {
     public static void printing(int[][] array,int width,int length){
         System.out.print("\t");
         for(int i=0;i<width;i++){
@@ -31,9 +35,10 @@ public class Main {
 
     }
     
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
 
+       GameOfLife Game= new GameOfLife();
 
         int length=10;
         int width=10;
@@ -45,8 +50,10 @@ public class Main {
                 array[i][j]=0;
         }
         }
+        array=Game.GetGridToUI();
         int option=-1,loop=0;
         while(loop!=-1) {
+
             System.out.println(System.lineSeparator().repeat(100));
             printing(array, width, length);
             //option Input
@@ -55,9 +62,9 @@ public class Main {
             System.out.println("1-Save State");
             System.out.println("2-Load States");
             System.out.println("3-Start");
-            System.out.println("4-Stop");
-            System.out.println("5-Zoom Level");
-
+            System.out.println("4-Zoom Level");
+            System.out.println("5-Reset");
+            System.out.println("6-Next State");
             // create an object of Scanner
             Scanner input = new Scanner(System.in);
             // take input from the user
@@ -73,23 +80,28 @@ public class Main {
                 Scanner input2 = new Scanner(System.in);
                 // take input from the user
                 int y = input2.nextInt();
-                  array[x][y]=1;
+                  Game.ManuallyDrawPattren(x,y);
+                array=Game.GetGridToUI();
             }
-            if(option==1){
+            if(option==1) {
                 //Save Current State
+
             }
             if(option==2){
                 //Load State
             }
             if(option==3){
                 //Start State
-
+                int Loop1=-1;
+                while(Loop1==-1){
+                    Game.Next(0);
+                    array=Game.GetGridToUI();
+                    System.out.println(System.lineSeparator().repeat(100));
+                    printing(array, width, length);
+                    TimeUnit.SECONDS.sleep(5);
+                }
             }
             if(option==4){
-                //Start State
-
-            }
-            if(option==5){
                 // create an object of Scanner
                 System.out.print("Enter Level From 1 to 4: ");
                 Scanner input1 = new Scanner(System.in);
@@ -108,8 +120,15 @@ public class Main {
                     length=40;
                     width=40;
                 }
+            } if(option==5){
+                Game.Clear(0);
+                array=Game.GetGridToUI();
             }
-
+            if(option==6){
+                //Next State
+                    Game.Next(0);
+                    array=Game.GetGridToUI();
+            }
         }
         
     }
